@@ -36,7 +36,7 @@ echo "${slug}: testing..."
 # TODO: Replace 'RUN_TESTS_COMMAND' with the command to run the tests
 test_output=$(RUN_TESTS_COMMAND 2>&1)
 
-# Write the results.json file based on the exit code of the command that was 
+# Write the results.json file based on the exit code of the command that was
 # just executed that tested the implementation file
 if [ $? -eq 0 ]; then
     jq -n '{version: 1, status: "pass"}' > ${results_file}

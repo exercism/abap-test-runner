@@ -1,0 +1,26 @@
+{
+  "name": "@exercism/abap-test-runner",
+  "private": true,
+  "description": "Automated Test runner for exercism solutions in ABAP.",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/abap-test-runner"
+  },
+  "directories": {
+    "lib": "./dist",
+    "doc": "./docs",
+    "test": "./test"
+  },
+  "bin": {
+    "abap-test-runner": "bin/run.sh"
+  },
+  "scripts": {
+    "execute": "./bin/run.sh"
+  },
+  "dependencies": {
+    "@abaplint/transpiler-cli": "^1.6.53",
+    "@abaplint/runtime": "^1.6.53"
+  }
+}
