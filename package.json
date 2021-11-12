@@ -20,7 +20,7 @@
     "execute": "./bin/run.sh"
   },
   "dependencies": {
-    "@abaplint/transpiler-cli": "^1.6.53",
-    "@abaplint/runtime": "^1.6.53"
+    "@abaplint/transpiler-cli": "^1.6.63",
+    "@abaplint/runtime": "^1.6.63"
   }
 }
