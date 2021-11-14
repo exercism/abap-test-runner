@@ -12,7 +12,5 @@ describe('abap-test-runner', async () => {
     const path = join(fixtures, slug, 'pass');
     const output = join(root, 'output');
     const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
-    console.log(res.stdout.toString().trim());
-    console.log(res.stderr.toString().trim());
   });
 });

@@ -17,7 +17,7 @@
     "abap-test-runner": "bin/run.sh"
   },
   "scripts": {
-    "build": "tsc --outDir ./dist",
+    "build": "tsc --outDir ./dist && git clone --depth=1 https://github.com/open-abap/open-abap",
     "test": "npm run build && mocha"
   },
   "mocha": {

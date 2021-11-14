@@ -3,9 +3,10 @@ import * as fs from "fs";
 import * as path from "path";
 import { execSync } from 'child_process'
 
-const inputDir = process.argv[2];
-const outputDir = process.argv[3];
-const outputFile = process.argv[4];
+const slug = process.argv[2];
+const inputDir = process.argv[3];
+const outputDir = process.argv[4];
+const outputFile = process.argv[5];
 
 export interface ITranspilerConfig {
   input_folder: string;
@@ -19,11 +20,15 @@ export interface ITranspilerConfig {
 }
 
 function run() {
+  execSync(`cp ${inputDir}/* ${outputDir}`, {
+    stdio: 'pipe',
+  });
+
   let config: ITranspilerConfig = {
-    input_folder: ".",
+    input_folder: outputDir,
     input_filter: [],
     output_folder: outputDir,
-    lib: "https://github.com/open-abap/open-abap",
+    lib: "",
     write_source_map: true,
     write_unit_tests: true,
     options: {
@@ -34,17 +39,29 @@ function run() {
     }
   }
 
-  fs.writeFileSync(inputDir + "/abap_transpile.json", JSON.stringify(config, null, 2));
+  console.dir(outputDir);
+  fs.writeFileSync(outputDir + "/abap_transpile.json", JSON.stringify(config, null, 2));
+
+  execSync(`cp open-abap/src/unit/*.clas.abap ${outputDir}`, {
+    stdio: 'pipe',
+  });
 
   const resCompile = execSync(`npx abap_transpile > ${outputDir}/_compile.txt`, {
     stdio: 'pipe',
-    cwd: inputDir
+    cwd: outputDir
   });
+  console.dir(resCompile.toString());
 
-  const resRun = execSync(`node index.mjs`, {
+  execSync(`npm link @abaplint/runtime`, {
     stdio: 'pipe',
     cwd: outputDir
   });
+
+  const resRun = execSync(`node index.mjs > foobar.txt`, {
+    stdio: 'pipe',
+    cwd: outputDir
+  });
+//  console.dir(resRun.toString());
 
   fs.writeFileSync(outputFile, `{"version": 1, "status": "pass"}`);
 }
