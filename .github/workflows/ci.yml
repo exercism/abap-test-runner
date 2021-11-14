@@ -15,6 +15,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - name: Use Node.js LTS (16.x)
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
+        with:
+          node-version: '16'
       - run: npm ci
       - run: npm test
       - name: Run Tests in Docker
