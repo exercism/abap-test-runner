@@ -1,22 +1,18 @@
 import { spawnSync } from 'child_process'
 import { join, resolve } from 'path'
-/*
-import { lstat, mkdtempSync, readFileSync, unlink } from 'fs'
-import { tmpdir } from 'os'
-*/
 
-const root = resolve(__dirname, '..');
-const fixtures = resolve(__dirname, 'fixtures');
+const root = resolve(__dirname, '../..');
+const fixtures = resolve(root, 'test', 'fixtures');
 const bin = resolve(root, 'bin');
 const run = resolve(bin, 'run.sh');
 
 describe('abap-test-runner', async () => {
-  it('passing solution', async () => {
-    const res = spawnSync('bash', [run, 'hello-world', join(fixtures, 'hello-world', 'pass')], {
-      stdio: 'pipe',
-      cwd: root,
-    });
-    console.dir(res);
-
+  it('simple, pass', async () => {
+    const slug = "simple";
+    const path = join(fixtures, slug, 'pass');
+    const output = join(root, 'output');
+    const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
+    console.log(res.stdout.toString().trim());
+    console.log(res.stderr.toString().trim());
   });
 });

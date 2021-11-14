@@ -18,17 +18,17 @@
   },
   "scripts": {
     "build": "tsc --outDir ./dist",
-    "test": "npm run build && mocha",
-    "execute": "./bin/run.sh"
+    "test": "npm run build && mocha"
   },
   "mocha": {
     "recursive": true,
-    "reporter": "progress",
+    "timeout": 60000,
     "spec": "dist/test/**/*.js",
     "require": "source-map-support/register"
 },
   "dependencies": {
     "@abaplint/transpiler-cli": "^1.6.63",
+    "@abaplint/transpiler": "^1.6.63",
     "@abaplint/runtime": "^1.6.63"
   },
   "devDependencies": {
