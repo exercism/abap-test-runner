@@ -16,5 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
 
+      - name: Run Tests
+        run: |
+          npm ci
+          npm test
+
       - name: Run Tests in Docker
         run: bin/run-tests-in-docker.sh
