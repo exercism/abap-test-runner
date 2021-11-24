@@ -35,7 +35,4 @@ echo "${slug}: testing..."
 
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
-test_output=$(node dist/src/index.js ${slug} "${solution_dir}" "${output_dir}" "${results_file}" 2>&1)
-echo ${test_output}
-
-echo "${slug}: done"
+node dist/src/index.js ${slug} "${solution_dir}" "${output_dir}" "${results_file}" 2>&1
