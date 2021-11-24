@@ -64,8 +64,8 @@ function run() {
       cwd: tmpDir});
   } catch (error) {
     output.status = "error";
-    const result = fs.readFileSync(path.join(tmpDir, COMPILE_RESULT), "utf-8");
-    output.message = result.split("at Transpiler.validate")[0];
+    output.message = fs.readFileSync(path.join(tmpDir, COMPILE_RESULT), "utf-8");
+    output.message = output.message.split("at Transpiler.validate")[0];
     output.message = output.message.trim();
   }
 
@@ -81,6 +81,10 @@ function run() {
     } catch (error) {
       output.status = "fail";
       output.message = fs.readFileSync(path.join(tmpDir, RUN_RESULT), "utf-8");
+      if (output.message.includes("Error: ASSERT failed")) {
+        output.message = output.message.split("Error: ASSERT failed")[0] + "Error: ASSERT failed";
+      }
+      output.message = output.message.trim();
     }
   }
 
