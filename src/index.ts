@@ -68,7 +68,9 @@ function run() {
       cwd: outputDir});
   } catch (error) {
     output.status = "error";
-    output.message = fs.readFileSync(path.join(outputDir, COMPILE_RESULT), "utf-8");
+    const result = fs.readFileSync(path.join(outputDir, COMPILE_RESULT), "utf-8");
+    output.message = result.split("at Transpiler.validate")[0];
+    output.message = output.message.trim();
   }
 
   if (output.status === "pass") {
