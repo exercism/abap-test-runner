@@ -38,4 +38,12 @@ describe('abap-test-runner', async () => {
     expect(res.status).to.equal(0);
     expect(readResult().status).to.equal("error");
   });
+
+  it('hello-world, pass', async () => {
+    const slug = "hello-world-pass";
+    const path = join(fixtures, slug);
+    const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
+    expect(res.status).to.equal(0);
+    expect(readResult().status).to.equal("pass");
+  });
 });

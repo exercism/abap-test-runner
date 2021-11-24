@@ -12,8 +12,9 @@ ENDCLASS.
 CLASS ltcl_hello_world IMPLEMENTATION.
 
   METHOD test.
-    CAST if_oo_adt_classrun( NEW zcl_hello_world( ) )->main( me ).
-
+    DATA hello TYPE REF TO zcl_hello_world.
+    CREATE OBJECT hello.
+    hello->if_oo_adt_classrun~main( me ).
     cl_abap_unit_assert=>assert_equals(
       act = if_oo_adt_classrun_out~get( )
       exp = 'Hello, World' ).

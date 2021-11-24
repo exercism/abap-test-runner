@@ -29,9 +29,6 @@ const COMPILE_RESULT = "_compile.txt";
 const RUN_RESULT = "foobar.txt";
 
 function run() {
-  execSync(`cp ${inputDir}/* ${outputDir}`, {
-    stdio: 'pipe',
-  });
 
   let config: ITranspilerConfig = {
     input_folder: ".",
@@ -50,9 +47,10 @@ function run() {
 
   fs.writeFileSync(outputDir + "/abap_transpile.json", JSON.stringify(config, null, 2));
 
-  execSync(`cp open-abap/src/unit/*.clas.abap ${outputDir}`, {
-    stdio: 'pipe',
-  });
+  execSync(`rm -f ${outputDir}/*.abap`, {stdio: 'pipe'});
+  execSync(`cp ${inputDir}/* ${outputDir}`, {stdio: 'pipe'});
+  execSync(`cp open-abap/src/unit/*.clas.abap ${outputDir}`, {stdio: 'pipe'});
+  execSync(`cp open-abap/src/classrun/*.intf.abap ${outputDir}`, {stdio: 'pipe'});
 
   const output: IOutput = {
     version: 1,
