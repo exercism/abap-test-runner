@@ -38,6 +38,7 @@ docker run \
     --network none \
     --mount type=bind,src="${solution_dir}",dst=/solution \
     --mount type=bind,src="${output_dir}",dst=/output \
+    --tmpfs /tmp:rw \
     exercism/test-runner "${slug}" "//solution" "//output"
 
 #    --mount type=tmpfs,dst=/tmp \

@@ -2,6 +2,7 @@ import * as Transpiler from "@abaplint/transpiler";
 import * as fs from "fs";
 import * as path from "path";
 import { execSync } from 'child_process'
+import { tmpdir } from "os";
 
 const slug = process.argv[2];
 const inputDir = process.argv[3];
@@ -45,17 +46,12 @@ function run() {
     }
   }
 
-  fs.writeFileSync(outputDir + "/abap_transpile.json", JSON.stringify(config, null, 2));
-
-  if (inputDir !== outputDir) {
-    execSync(`rm -f ${outputDir}/*.abap`, {stdio: 'pipe'});
-    execSync(`cp ${inputDir}/*.abap ${outputDir}`, {stdio: 'pipe'});
-  }
-  if (fs.existsSync(`${outputDir}/deps`) === false) {
-    fs.mkdirSync(`${outputDir}/deps`);
-  }
-  execSync(`cp open-abap/src/unit/*.clas.abap ${outputDir}/deps/`, {stdio: 'pipe'});
-  execSync(`cp open-abap/src/classrun/*.intf.abap ${outputDir}/deps/`, {stdio: 'pipe'});
+  const tmpDir = fs.mkdtempSync(path.join(tmpdir(), 'exercism-abap-runner-'));
+  fs.writeFileSync(path.join(tmpDir, "abap_transpile.json"), JSON.stringify(config, null, 2));
+  execSync(`cp ${inputDir}/*.abap ${tmpDir}`, {stdio: 'pipe'});
+  fs.mkdirSync(`${tmpDir}/deps`);
+  execSync(`cp open-abap/src/unit/*.clas.abap ${tmpDir}/deps/`, {stdio: 'pipe'});
+  execSync(`cp open-abap/src/classrun/*.intf.abap ${tmpDir}/deps/`, {stdio: 'pipe'});
 
   const output: IOutput = {
     version: 1,
@@ -63,12 +59,12 @@ function run() {
   }
 
   try {
-    execSync(`npx abap_transpile > ` + COMPILE_RESULT, {
+    execSync(`abap_transpile > ` + COMPILE_RESULT, {
       stdio: 'pipe',
-      cwd: outputDir});
+      cwd: tmpDir});
   } catch (error) {
     output.status = "error";
-    const result = fs.readFileSync(path.join(outputDir, COMPILE_RESULT), "utf-8");
+    const result = fs.readFileSync(path.join(tmpDir, COMPILE_RESULT), "utf-8");
     output.message = result.split("at Transpiler.validate")[0];
     output.message = output.message.trim();
   }
@@ -76,15 +72,15 @@ function run() {
   if (output.status === "pass") {
     execSync(`npm link @abaplint/runtime`, {
       stdio: 'pipe',
-      cwd: outputDir });
+      cwd: tmpDir });
 
     try {
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
-        cwd: outputDir});
+        cwd: tmpDir});
     } catch (error) {
       output.status = "fail";
-      output.message = fs.readFileSync(path.join(outputDir, RUN_RESULT), "utf-8");
+      output.message = fs.readFileSync(path.join(tmpDir, RUN_RESULT), "utf-8");
     }
   }
 
