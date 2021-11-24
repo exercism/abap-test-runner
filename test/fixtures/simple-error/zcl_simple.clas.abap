@@ -1,0 +1,12 @@
+CLASS zcl_simple DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    METHODS run RETURNING VALUE(res) TYPE i.
+ENDCLASS.
+
+CLASS zcl_simple IMPLEMENTATION.
+
+  METHOD run.
+    blah blah, this is not valid ABAP code
+  ENDMETHOD.
+
+ENDCLASS.

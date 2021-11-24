@@ -1,7 +1,7 @@
 import * as Transpiler from "@abaplint/transpiler";
 import * as fs from "fs";
 import * as path from "path";
-import { execSync, spawnSync } from 'child_process'
+import { execSync } from 'child_process'
 
 const slug = process.argv[2];
 const inputDir = process.argv[3];
@@ -24,6 +24,9 @@ export interface ITranspilerConfig {
   write_source_map: boolean;
   options: Transpiler.ITranspilerOptions;
 }
+
+const COMPILE_RESULT = "_compile.txt";
+const RUN_RESULT = "foobar.txt";
 
 function run() {
   execSync(`cp ${inputDir}/* ${outputDir}`, {
@@ -56,7 +59,6 @@ function run() {
     status: "pass",
   }
 
-  const COMPILE_RESULT = "_compile.txt";
   try {
     execSync(`npx abap_transpile > ` + COMPILE_RESULT, {
       stdio: 'pipe',
@@ -71,7 +73,6 @@ function run() {
       stdio: 'pipe',
       cwd: outputDir });
 
-    const RUN_RESULT = "foobar.txt";
     try {
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
