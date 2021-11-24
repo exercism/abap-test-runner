@@ -1,6 +1,10 @@
-test/**/results.json
-test/**/abap_transpile.json
-node_modules
 dist
-output
+node_modules
 open-abap/
+output
+tests/*/_compile_result.txt
+tests/*/_run_result.txt
+tests/*/abap_transpile.json
+tests/*/compiled
+tests/*/deps
+tests/*/results.json

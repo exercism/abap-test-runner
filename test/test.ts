@@ -4,7 +4,7 @@ import {expect} from "chai";
 import * as fs from "fs";
 
 const root = resolve(__dirname, '../..');
-const fixtures = resolve(root, 'test');
+const fixtures = resolve(root, 'tests');
 const bin = resolve(root, 'bin');
 const run = resolve(bin, 'run.sh');
 const output = join(root, 'output');
