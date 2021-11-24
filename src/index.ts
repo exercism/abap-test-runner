@@ -49,11 +49,13 @@ function run() {
 
   if (inputDir !== outputDir) {
     execSync(`rm -f ${outputDir}/*.abap`, {stdio: 'pipe'});
-    execSync(`cp ${inputDir}/* ${outputDir}`, {stdio: 'pipe'});
+    execSync(`cp ${inputDir}/*.abap ${outputDir}`, {stdio: 'pipe'});
   }
-  execSync(`mkdir -f ${outputDir}/deps/`, {stdio: 'pipe'});
+  if (fs.existsSync(`${outputDir}/deps`) === false) {
+    fs.mkdirSync(`${outputDir}/deps`);
+  }
   execSync(`cp open-abap/src/unit/*.clas.abap ${outputDir}/deps/`, {stdio: 'pipe'});
-  execSync(`cp open-abap/src/classrun/*.intf.abap ${outputDir}`, {stdio: 'pipe'});
+  execSync(`cp open-abap/src/classrun/*.intf.abap ${outputDir}/deps/`, {stdio: 'pipe'});
 
   const output: IOutput = {
     version: 1,
