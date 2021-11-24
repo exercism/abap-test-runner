@@ -1,8 +1,9 @@
-FROM alpine:3.10
-
-# TODO: install packages required to run the tests
-# RUN apk add --no-cache jq coreutils
+FROM node:lts
 
 WORKDIR /opt/test-runner
 COPY . .
+RUN npm ci
+RUN npm run build
+RUN npm install @abaplint/transpiler-cli -g
+RUN npm install @abaplint/runtime -g
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]

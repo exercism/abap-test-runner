@@ -1,0 +1,43 @@
+{
+  "name": "@exercism/abap-test-runner",
+  "private": true,
+  "description": "Automated Test runner for exercism solutions in ABAP.",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/abap-test-runner"
+  },
+  "directories": {
+    "lib": "./dist",
+    "doc": "./docs",
+    "test": "./test"
+  },
+  "bin": {
+    "abap-test-runner": "bin/run.sh"
+  },
+  "scripts": {
+    "build": "tsc --outDir ./dist && git clone --depth=1 https://github.com/open-abap/open-abap || true",
+    "test": "npm run build && mocha"
+  },
+  "mocha": {
+    "recursive": true,
+    "timeout": 60000,
+    "spec": "dist/test/**/*.js",
+    "require": "source-map-support/register"
+},
+  "dependencies": {
+    "@abaplint/transpiler-cli": "^1.6.63",
+    "@abaplint/transpiler": "^1.6.63",
+    "@abaplint/runtime": "^1.6.63"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3",
+    "source-map-support": "^0.5.20",
+    "typescript": "^4.4.4",
+    "@types/node": "^16.11.7"
+  }
+}

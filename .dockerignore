@@ -1,5 +1,11 @@
 .git/
+.appends/
 .github/
+.gitattributes
+.gitignore
+Dockerfile
 bin/run-in-docker.sh
 bin/run-tests-in-docker.sh
 tests/
+output/
+open-abap/
