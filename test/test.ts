@@ -44,4 +44,12 @@ describe('abap-test-runner', async () => {
   it('hello-world, pass', async () => {
     test("hello-world-pass", "pass");
   });
+
+  it('simple-all-fail, fail', async () => {
+    test("simple-all-fail", "fail");
+  });
+
+  it('simple-some-fail, fail', async () => {
+    test("simple-some-fail", "fail");
+  });
 });
