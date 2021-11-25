@@ -20,40 +20,28 @@ function checkExpected(expectedFile: string): void {
   expect(act).to.equal(exp);
 }
 
+function test(slug: string, expectedStatus: string) {
+  const path = join(fixtures, slug);
+  const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
+  expect(res.status).to.equal(0);
+  expect(readResult().status).to.equal(expectedStatus);
+  checkExpected(join(path, "expected_results.json"));
+}
+
 describe('abap-test-runner', async () => {
   it('simple, pass', async () => {
-    const slug = "simple-pass";
-    const path = join(fixtures, slug);
-    const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
-    expect(res.status).to.equal(0);
-    expect(readResult().status).to.equal("pass");
-    checkExpected(join(path, "expected_results.json"));
+    test("simple-pass", "pass");
   });
 
   it('simple, fail', async () => {
-    const slug = "simple-fail";
-    const path = join(fixtures, slug);
-    const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
-    expect(res.status).to.equal(0);
-    expect(readResult().status).to.equal("fail");
-    checkExpected(join(path, "expected_results.json"));
+    test("simple-fail", "fail");
   });
 
   it('simple, syntax error', async () => {
-    const slug = "simple-error";
-    const path = join(fixtures, slug);
-    const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
-    expect(res.status).to.equal(0);
-    expect(readResult().status).to.equal("error");
-    checkExpected(join(path, "expected_results.json"));
+    test("simple-error", "error");
   });
 
   it('hello-world, pass', async () => {
-    const slug = "hello-world-pass";
-    const path = join(fixtures, slug);
-    const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
-    expect(res.status).to.equal(0);
-    expect(readResult().status).to.equal("pass");
-    checkExpected(join(path, "expected_results.json"));
+    test("hello-world-pass", "pass");
   });
 });
