@@ -1,0 +1,1 @@
+{"version":1,"status":"error","message":"Transpiler CLI\nUsing config: abap_transpile.json\n7 files added\n0 files skipped\n\nBuilding\nError: parser_error, Statement does not exist in ABAPopen-abap(or a parser error), \"blah\", zcl_simple.clas.abap:9"}
