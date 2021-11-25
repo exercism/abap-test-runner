@@ -33,23 +33,27 @@ describe('abap-test-runner', async () => {
     test("simple-pass", "pass");
   });
 
-  it('simple, fail', async () => {
+  it('simple-fail', async () => {
     test("simple-fail", "fail");
   });
 
-  it('simple, syntax error', async () => {
+  it('simple-error', async () => {
     test("simple-error", "error");
   });
 
-  it('hello-world, pass', async () => {
+  it('hello-world-pass', async () => {
     test("hello-world-pass", "pass");
   });
 
-  it('simple-all-fail, fail', async () => {
+  it('simple-all-fail', async () => {
     test("simple-all-fail", "fail");
   });
 
-  it('simple-some-fail, fail', async () => {
+  it('simple-some-fail', async () => {
     test("simple-some-fail", "fail");
+  });
+
+  it('simple-downport-pass', async () => {
+    test("simple-downport-pass", "pass");
   });
 });

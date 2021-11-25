@@ -53,9 +53,10 @@ class Runner {
   private syntaxAndDownport() {
     const LINT_RESULT = "_abaplint.txt";
     const abaplintConfig = Transpiler.config;
+    abaplintConfig.rules["downport"] = true;
     fs.writeFileSync(path.join(this.tmpDir, "abaplint.json"), JSON.stringify(abaplintConfig, null, 2));
     try {
-      execSync(`abaplint > ` + LINT_RESULT, {
+      execSync(`abaplint --fix > ` + LINT_RESULT, {
         stdio: 'pipe',
         cwd: this.tmpDir});
     } catch (error) {
