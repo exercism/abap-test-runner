@@ -24,8 +24,8 @@ function test(slug: string, expectedStatus: string) {
   const path = join(fixtures, slug);
   const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
   expect(res.status).to.equal(0);
-  expect(readResult().status).to.equal(expectedStatus);
   checkExpected(join(path, "expected_results.json"));
+  expect(readResult().status).to.equal(expectedStatus);
 }
 
 describe('abap-test-runner', async () => {

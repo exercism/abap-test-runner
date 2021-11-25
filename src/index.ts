@@ -26,9 +26,6 @@ export interface ITranspilerConfig {
   options: Transpiler.ITranspilerOptions;
 }
 
-const COMPILE_RESULT = "_compile_result.txt";
-const RUN_RESULT = "_run_result.txt";
-
 const output: IOutput = {
   version: 1,
   status: "pass",
@@ -43,11 +40,28 @@ class Runner {
 
   public run() {
     this.initialize();
-    this.transpile();
+    this.syntaxAndDownport();
+    if (output.status === "pass") {
+      this.transpile();
+    }
     if (output.status === "pass") {
       this.executeTests();
     }
     fs.writeFileSync(outputFile, JSON.stringify(output));
+  }
+
+  private syntaxAndDownport() {
+    const LINT_RESULT = "_abaplint.txt";
+    const abaplintConfig = Transpiler.config;
+    fs.writeFileSync(path.join(this.tmpDir, "abaplint.json"), JSON.stringify(abaplintConfig, null, 2));
+    try {
+      execSync(`abaplint > ` + LINT_RESULT, {
+        stdio: 'pipe',
+        cwd: this.tmpDir});
+    } catch (error) {
+      output.status = "error";
+      output.message = fs.readFileSync(path.join(this.tmpDir, LINT_RESULT), "utf-8");
+    }
   }
 
   private initialize() {
@@ -70,10 +84,14 @@ class Runner {
     execSync(`cp ${inputDir}/*.abap ${this.tmpDir}`, {stdio: 'pipe'});
     fs.mkdirSync(`${this.tmpDir}/deps`);
     execSync(`cp open-abap/src/unit/*.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/ddic/*.xml ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
   }
 
   private transpile() {
+    const COMPILE_RESULT = "_compile_result.txt";
     try {
       execSync(`abap_transpile > ` + COMPILE_RESULT, {
         stdio: 'pipe',
@@ -87,6 +105,7 @@ class Runner {
   }
 
   private executeTests() {
+    const RUN_RESULT = "_run_result.txt";
     execSync(`npm link @abaplint/runtime`, {
       stdio: 'pipe',
       cwd: this.tmpDir });
