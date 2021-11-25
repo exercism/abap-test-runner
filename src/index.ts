@@ -29,66 +29,81 @@ export interface ITranspilerConfig {
 const COMPILE_RESULT = "_compile_result.txt";
 const RUN_RESULT = "_run_result.txt";
 
-function run() {
+const output: IOutput = {
+  version: 1,
+  status: "pass",
+}
 
-  let config: ITranspilerConfig = {
-    input_folder: ".",
-    input_filter: [],
-    output_folder: "compiled",
-    lib: "",
-    write_source_map: true,
-    write_unit_tests: true,
-    options: {
-      ignoreSyntaxCheck: false,
-      addFilenames: true,
-      addCommonJS: true,
-      unknownTypes: "runtimeError",
+class Runner {
+  private readonly tmpDir: string;
+
+  public constructor() {
+    this.tmpDir = fs.mkdtempSync(path.join(tmpdir(), 'exercism-abap-runner-'));
+  }
+
+  public run() {
+    this.initialize();
+    this.transpile();
+    if (output.status === "pass") {
+      this.executeTests();
+    }
+    fs.writeFileSync(outputFile, JSON.stringify(output));
+  }
+
+  private initialize() {
+    const config: ITranspilerConfig = {
+      input_folder: ".",
+      input_filter: [],
+      output_folder: "compiled",
+      lib: "",
+      write_source_map: true,
+      write_unit_tests: true,
+      options: {
+        ignoreSyntaxCheck: false,
+        addFilenames: true,
+        addCommonJS: true,
+        unknownTypes: "runtimeError",
+      }
+    }
+
+    fs.writeFileSync(path.join(this.tmpDir, "abap_transpile.json"), JSON.stringify(config, null, 2));
+    execSync(`cp ${inputDir}/*.abap ${this.tmpDir}`, {stdio: 'pipe'});
+    fs.mkdirSync(`${this.tmpDir}/deps`);
+    execSync(`cp open-abap/src/unit/*.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+  }
+
+  private transpile() {
+    try {
+      execSync(`abap_transpile > ` + COMPILE_RESULT, {
+        stdio: 'pipe',
+        cwd: this.tmpDir});
+    } catch (error) {
+      output.status = "error";
+      output.message = fs.readFileSync(path.join(this.tmpDir, COMPILE_RESULT), "utf-8");
+      output.message = output.message.split("at Transpiler.validate")[0];
+      output.message = output.message.trim();
     }
   }
 
-  const tmpDir = fs.mkdtempSync(path.join(tmpdir(), 'exercism-abap-runner-'));
-  fs.writeFileSync(path.join(tmpDir, "abap_transpile.json"), JSON.stringify(config, null, 2));
-  execSync(`cp ${inputDir}/*.abap ${tmpDir}`, {stdio: 'pipe'});
-  fs.mkdirSync(`${tmpDir}/deps`);
-  execSync(`cp open-abap/src/unit/*.clas.abap ${tmpDir}/deps/`, {stdio: 'pipe'});
-  execSync(`cp open-abap/src/classrun/*.intf.abap ${tmpDir}/deps/`, {stdio: 'pipe'});
-
-  const output: IOutput = {
-    version: 1,
-    status: "pass",
-  }
-
-  try {
-    execSync(`abap_transpile > ` + COMPILE_RESULT, {
-      stdio: 'pipe',
-      cwd: tmpDir});
-  } catch (error) {
-    output.status = "error";
-    output.message = fs.readFileSync(path.join(tmpDir, COMPILE_RESULT), "utf-8");
-    output.message = output.message.split("at Transpiler.validate")[0];
-    output.message = output.message.trim();
-  }
-
-  if (output.status === "pass") {
+  private executeTests() {
     execSync(`npm link @abaplint/runtime`, {
       stdio: 'pipe',
-      cwd: tmpDir });
+      cwd: this.tmpDir });
 
     try {
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
-        cwd: tmpDir});
+        cwd: this.tmpDir});
     } catch (error) {
       output.status = "fail";
-      output.message = fs.readFileSync(path.join(tmpDir, RUN_RESULT), "utf-8");
+      output.message = fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8");
       if (output.message.includes("Error: ASSERT failed")) {
         output.message = output.message.split("Error: ASSERT failed")[0] + "Error: ASSERT failed";
       }
       output.message = output.message.trim();
     }
   }
-
-  fs.writeFileSync(outputFile, JSON.stringify(output));
 }
 
-run();
+new Runner().run();
