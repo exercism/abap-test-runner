@@ -39,7 +39,7 @@ docker run \
     --mount type=bind,src="${solution_dir}",dst=/solution \
     --mount type=bind,src="${output_dir}",dst=/output \
     --tmpfs /tmp:rw \
-    exercism/test-runner "${slug}" "//solution" "//output"
+    exercism/test-runner "${slug}" "/solution" "/output"
 
 #    --mount type=tmpfs,dst=/tmp \
 # https://stackoverflow.com/questions/48427366/docker-build-command-add-c-program-files-git-to-the-path-passed-as-build-argu
