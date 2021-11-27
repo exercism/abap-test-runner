@@ -56,4 +56,8 @@ describe('abap-test-runner', async () => {
   it('simple-downport-pass', async () => {
     test("simple-downport-pass", "pass");
   });
+
+  it('simple-downport-definitions_top-pass', async () => {
+    test("simple-downport-definitions_top-pass", "pass");
+  });
 });

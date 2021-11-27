@@ -53,7 +53,8 @@ class Runner {
   private syntaxAndDownport() {
     const LINT_RESULT = "_abaplint.txt";
     const abaplintConfig = Transpiler.config;
-    abaplintConfig.rules["downport"] = true;
+    abaplintConfig.rules["downport"] = true;        // https://rules.abaplint.org/downport/
+    abaplintConfig.rules["definitions_top"] = true; // https://rules.abaplint.org/definitions_top/
     fs.writeFileSync(path.join(this.tmpDir, "abaplint.json"), JSON.stringify(abaplintConfig, null, 2));
     try {
       execSync(`abaplint --fix > ` + LINT_RESULT, {
