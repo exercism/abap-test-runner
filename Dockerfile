@@ -1,4 +1,6 @@
-FROM node:lts
+FROM node:lts-alpine
+
+RUN apk add --no-cache git
 
 WORKDIR /opt/test-runner
 COPY . .
