@@ -63,6 +63,7 @@ class Runner {
     } catch (error) {
       output.status = "error";
       output.message = fs.readFileSync(path.join(this.tmpDir, LINT_RESULT), "utf-8");
+      output.message = output.message.replace(/, \d+ file\(s\) analyzed\nFixes applied/, "");
     }
   }
 
