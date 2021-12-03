@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:lts
 
 WORKDIR /opt/test-runner
 COPY . .
