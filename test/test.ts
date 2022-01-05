@@ -23,7 +23,7 @@ function checkExpected(expectedFile: string): void {
 function test(slug: string, expectedStatus: string) {
   const path = join(fixtures, slug);
   const res = spawnSync('bash', [run, slug, path, output], {cwd: root});
-  expect(res.status).to.equal(0);
+  expect(res.status).to.equal(0, res.stdout.toString());
   checkExpected(join(path, "expected_results.json"));
   expect(readResult().status).to.equal(expectedStatus);
 }
@@ -59,5 +59,9 @@ describe('abap-test-runner', async () => {
 
   it('simple-downport-definitions_top-pass', async () => {
     test("simple-downport-definitions_top-pass", "pass");
+  });
+
+  it('use-ddic-string-table', async () => {
+    test("use-ddic-string-table", "pass");
   });
 });
