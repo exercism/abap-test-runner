@@ -11,6 +11,24 @@ To run the tests of an arbitrary exercise, do the following:
 
 Once the test runner has finished, its results will be written to `<output-dir>/results.json`.
 
+## Run the test on one exercise
+
+To test a single exercise, do the following:
+1. Open a terminal in the project's root
+2. Run `./bin/run-test-single-exercise.sh <exercise-slug> <exercise-slug> <output-dir>`
+
+For example:  
+`./bin/run-test-single-exercise.sh isogram ../abap/exercises/practice/isogram ./dist/output`
+
+## Run the test on all exercises
+
+To test all exercises, do the following:
+1. Open a terminal in the project's root
+2. Run `./bin/run-test-single-exercise.sh <exercise-slug> <exercise-slug> <output-dir>`
+
+For example:
+`./bin/run-test-exercises.sh ../abap/exercises/practice`
+
 ## Run the test runner on an exercise using Docker
 
 _This script is provided for testing purposes, as it mimics how test runners run in Exercism's production environment._
