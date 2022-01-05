@@ -1,0 +1,14 @@
+CLASS zcl_simple DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    METHODS run RETURNING VALUE(res) TYPE i.
+ENDCLASS.
+
+CLASS zcl_simple IMPLEMENTATION.
+
+  METHOD run.
+    DATA foo TYPE string_table.
+    APPEND |sdf| TO foo.
+    res = 3.
+  ENDMETHOD.
+
+ENDCLASS.

@@ -60,4 +60,8 @@ describe('abap-test-runner', async () => {
   it('simple-downport-definitions_top-pass', async () => {
     test("simple-downport-definitions_top-pass", "pass");
   });
+
+  it('use-ddic-string-table', async () => {
+    test("use-ddic-string-table", "pass");
+  });
 });
