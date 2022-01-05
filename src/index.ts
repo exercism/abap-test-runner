@@ -88,7 +88,7 @@ class Runner {
     fs.mkdirSync(`${this.tmpDir}/deps`);
     execSync(`cp open-abap/src/unit/*.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/ddic/*.xml ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap/src/ddic/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
   }
