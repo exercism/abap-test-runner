@@ -60,6 +60,7 @@ class Runner {
       execSync(`abaplint --fix > ` + LINT_RESULT, {
         stdio: 'pipe',
         cwd: this.tmpDir});
+      console.dir("test, done, from TS");
     } catch (error) {
       output.status = "error";
       output.message = fs.readFileSync(path.join(this.tmpDir, LINT_RESULT), "utf-8");
@@ -88,7 +89,11 @@ class Runner {
     fs.mkdirSync(`${this.tmpDir}/deps`);
     execSync(`cp open-abap/src/unit/*.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap/src/ddic/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+
+    // DDIC, avoid copying transparent database table artifacts
+    execSync(`cp -r open-abap/src/ddic/dtel/timestamp* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap/src/ddic/ttyp/string_table* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+
     execSync(`cp open-abap/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
   }
