@@ -124,7 +124,7 @@ class Runner {
   private link() {
     const RUN_RESULT = "_link_result.txt";
     const start = Date.now();
-    execSync(`npm --no-update-notifier link @abaplint/runtime > ` + RUN_RESULT, {
+    execSync(`npm --fund=false link @abaplint/runtime > ` + RUN_RESULT, {
       stdio: 'pipe',
       cwd: this.tmpDir });
     const end = Date.now();
