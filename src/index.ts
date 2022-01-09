@@ -45,6 +45,7 @@ class Runner {
       this.transpile();
     }
     if (output.status === "pass") {
+      this.link();
       this.executeTests();
     }
     fs.writeFileSync(outputFile, JSON.stringify(output));
@@ -120,16 +121,20 @@ class Runner {
     console.log("transpile: " + (end - start) + "ms");
   }
 
+  private link() {
+    const start = Date.now();
+    execSync(`npm --no-update-notifier link @abaplint/runtime`, {
+      stdio: 'pipe',
+      cwd: this.tmpDir });
+    const end = Date.now();
+    console.log("link: " + (end - start) + "ms");
+  }
+
   private executeTests() {
     const start = Date.now();
     const RUN_RESULT = "_run_result.txt";
-    execSync(`npm link @abaplint/runtime`, {
-      stdio: 'pipe',
-      env: {...process.env, 'NO_UPDATE_NOTIFIER': '1'},
-      cwd: this.tmpDir });
 
     try {
-
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
         cwd: this.tmpDir});
