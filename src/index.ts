@@ -125,7 +125,7 @@ class Runner {
     const RUN_RESULT = "_run_result.txt";
     execSync(`npm link @abaplint/runtime`, {
       stdio: 'pipe',
-      env: {...process.env, 'NO_UPDATE_NOTIFIER': 'true'},
+      env: {...process.env, 'NO_UPDATE_NOTIFIER': '1'},
       cwd: this.tmpDir });
 
     try {
