@@ -125,13 +125,13 @@ class Runner {
     const RUN_RESULT = "_run_result.txt";
     execSync(`npm link @abaplint/runtime`, {
       stdio: 'pipe',
+      env: {'NO_UPDATE_NOTIFIER': 'true'},
       cwd: this.tmpDir });
 
     try {
 
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
-        env: {'NO_UPDATE_NOTIFIER': 'true'},
         cwd: this.tmpDir});
     } catch (error) {
       output.status = "fail";
