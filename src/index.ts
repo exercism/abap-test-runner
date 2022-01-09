@@ -122,9 +122,10 @@ class Runner {
   }
 
   private link() {
+    return;
     const RUN_RESULT = "_link_result.txt";
     const start = Date.now();
-    execSync(`npm --version > _version.txt && npm --global-style=true link @abaplint/runtime > ` + RUN_RESULT, {
+    execSync(`npm root -g > _version.txt && npm --global-style=true link @abaplint/runtime > ` + RUN_RESULT, {
       stdio: 'pipe',
       cwd: this.tmpDir });
     const end = Date.now();
@@ -133,10 +134,20 @@ class Runner {
     console.dir(fs.readFileSync(path.join(this.tmpDir, "_version.txt"), "utf-8"));
   }
 
+  private getGlobalPath() {
+    execSync(`npm root -g > _version.txt`, {
+      stdio: 'pipe',
+      cwd: this.tmpDir });
+    const p = fs.readFileSync(path.join(this.tmpDir, "_version.txt"), "utf-8").trim();
+    execSync(`cp -r ${p} ${this.tmpDir}`, {stdio: 'pipe'});
+    return p;
+  }
+
   private executeTests() {
     const start = Date.now();
     const RUN_RESULT = "_run_result.txt";
 
+    this.getGlobalPath();
     try {
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
