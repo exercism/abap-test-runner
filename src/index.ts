@@ -56,16 +56,18 @@ class Runner {
     abaplintConfig.rules["downport"] = true;        // https://rules.abaplint.org/downport/
     abaplintConfig.rules["definitions_top"] = true; // https://rules.abaplint.org/definitions_top/
     fs.writeFileSync(path.join(this.tmpDir, "abaplint.json"), JSON.stringify(abaplintConfig, null, 2));
+    const start = Date.now();
     try {
       execSync(`abaplint --fix > ` + LINT_RESULT, {
         stdio: 'pipe',
         cwd: this.tmpDir});
-      console.dir("test, done, from TS");
     } catch (error) {
       output.status = "error";
       output.message = fs.readFileSync(path.join(this.tmpDir, LINT_RESULT), "utf-8");
       output.message = output.message.replace(/, \d+ file\(s\) analyzed\nFixes applied/, "");
     }
+    const end = Date.now();
+    console.log("syntaxAndDownport: " + (end - start) + "ms");
   }
 
   private initialize() {
@@ -84,6 +86,7 @@ class Runner {
       }
     }
 
+    const start = Date.now();
     fs.writeFileSync(path.join(this.tmpDir, "abap_transpile.json"), JSON.stringify(config, null, 2));
     execSync(`cp ${inputDir}/*.abap ${this.tmpDir}`, {stdio: 'pipe'});
     fs.mkdirSync(`${this.tmpDir}/deps`);
@@ -96,9 +99,12 @@ class Runner {
 
     execSync(`cp open-abap/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
+    const end = Date.now();
+    console.log("initialize: " + (end - start) + "ms");
   }
 
   private transpile() {
+    const start = Date.now();
     const COMPILE_RESULT = "_compile_result.txt";
     try {
       execSync(`abap_transpile > ` + COMPILE_RESULT, {
@@ -110,9 +116,12 @@ class Runner {
       output.message = output.message.split("at Transpiler.validate")[0];
       output.message = output.message.trim();
     }
+    const end = Date.now();
+    console.log("transpile: " + (end - start) + "ms");
   }
 
   private executeTests() {
+    const start = Date.now();
     const RUN_RESULT = "_run_result.txt";
     execSync(`npm link @abaplint/runtime`, {
       stdio: 'pipe',
@@ -130,6 +139,8 @@ class Runner {
       }
       output.message = output.message.trim();
     }
+    const end = Date.now();
+    console.log("executeTests: " + (end - start) + "ms");
   }
 }
 
