@@ -124,6 +124,7 @@ class Runner {
   private link() {
     const RUN_RESULT = "_link_result.txt";
     const start = Date.now();
+    /*
     execSync(`npm --version > _version.txt && npm link @abaplint/runtime > ` + RUN_RESULT, {
       stdio: 'pipe',
       cwd: this.tmpDir });
@@ -131,6 +132,7 @@ class Runner {
     console.log("link: " + (end - start) + "ms");
     console.dir(fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8"));
     console.dir(fs.readFileSync(path.join(this.tmpDir, "_version.txt"), "utf-8"));
+    */
   }
 
   private executeTests() {
