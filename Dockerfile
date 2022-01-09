@@ -1,6 +1,7 @@
 FROM node:lts-alpine
 
 RUN apk add --no-cache git
+RUN npm config set update-notifier false
 
 WORKDIR /opt/test-runner
 COPY . .
