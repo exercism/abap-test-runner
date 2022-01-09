@@ -128,8 +128,10 @@ class Runner {
       cwd: this.tmpDir });
 
     try {
+
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
+        env: {'NO_UPDATE_NOTIFIER': 'true'},
         cwd: this.tmpDir});
     } catch (error) {
       output.status = "fail";
