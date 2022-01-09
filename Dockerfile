@@ -1,7 +1,9 @@
 FROM node:lts-alpine
 
 RUN apk add --no-cache git
-RUN npm config set update-notifier false
+
+# The docker container is run without network access, so dont check for updates
+RUN npm config set -g update-notifier false
 
 WORKDIR /opt/test-runner
 COPY . .
