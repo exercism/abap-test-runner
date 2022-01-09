@@ -124,7 +124,7 @@ class Runner {
   private link() {
     const RUN_RESULT = "_link_result.txt";
     const start = Date.now();
-    execSync(`npm --ignore-scripts=true link @abaplint/runtime > ` + RUN_RESULT, {
+    execSync(`npm --version && npm link @abaplint/runtime > ` + RUN_RESULT, {
       stdio: 'pipe',
       cwd: this.tmpDir });
     const end = Date.now();
