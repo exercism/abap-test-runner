@@ -129,18 +129,8 @@ class Runner {
       cwd: this.tmpDir });
     const end = Date.now();
     console.log("link: " + (end - start) + "ms");
-    console.dir(fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8"));
+    // console.dir(fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8"));
   }
-/*
-  private getGlobalPath() {
-    execSync(`npm root -g > _version.txt`, {
-      stdio: 'pipe',
-      cwd: this.tmpDir });
-    const p = fs.readFileSync(path.join(this.tmpDir, "_version.txt"), "utf-8").trim();
-    execSync(`cp -r ${p} ${this.tmpDir}`, {stdio: 'pipe'});
-    return p;
-  }
-  */
 
   private executeTests() {
     const start = Date.now();
