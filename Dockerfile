@@ -1,6 +1,9 @@
 FROM node:lts-slim
 
-RUN apk add --no-cache git
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get -y install git
+
 RUN npm --version
 
 # The docker container is run without network access, so dont check for updates
