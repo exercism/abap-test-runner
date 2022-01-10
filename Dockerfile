@@ -1,6 +1,5 @@
 FROM node:lts
 
-RUN apk add --no-cache git
 RUN npm --version
 
 # The docker container is run without network access, so dont check for updates
