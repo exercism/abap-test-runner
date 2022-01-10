@@ -14,4 +14,4 @@ RUN npm install @abaplint/cli -g
 RUN npm install @abaplint/transpiler-cli -g
 RUN npm install @abaplint/runtime -g
 RUN npm list -g
-ENTRYPOINT ["/bin/sh", "-c" , "echo 127.0.0.1   registry.npmjs.org >> /etc/hosts && /opt/test-runner/bin/run.sh"]
+ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
