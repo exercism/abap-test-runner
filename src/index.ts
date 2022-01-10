@@ -129,7 +129,7 @@ class Runner {
       cwd: this.tmpDir });
     const end = Date.now();
     console.log("link: " + (end - start) + "ms");
-    console.dir(fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8"));
+    console.dir(fs.readFileSync(path.join(this.tmpDir, "npm-debug.log"), "utf-8"));
   }
 /*
   private getGlobalPath() {
