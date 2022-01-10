@@ -3,6 +3,10 @@ FROM node:lts-slim
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get -y install git
+RUN apt-get purge --auto-remove
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
+
 
 RUN npm --version
 
