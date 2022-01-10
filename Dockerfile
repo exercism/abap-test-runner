@@ -5,6 +5,7 @@ RUN npm --version
 
 # The docker container is run without network access, so dont check for updates
 ENV NO_UPDATE_NOTIFIER=true
+RUN echo 127.0.0.1   registry.npmjs.org >> /etc/hosts
 
 WORKDIR /opt/test-runner
 COPY . .
