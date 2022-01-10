@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts
 
 RUN apk add --no-cache git
 RUN npm --version
