@@ -45,6 +45,7 @@ class Runner {
       this.transpile();
     }
     if (output.status === "pass") {
+      this.link();
       this.executeTests();
     }
     fs.writeFileSync(outputFile, JSON.stringify(output));
@@ -120,12 +121,20 @@ class Runner {
     console.log("transpile: " + (end - start) + "ms");
   }
 
+  private link() {
+    const RUN_RESULT = "_link_result.txt";
+    const start = Date.now();
+    execSync(`npm link @abaplint/runtime > ` + RUN_RESULT, {
+      stdio: 'pipe',
+      cwd: this.tmpDir });
+    const end = Date.now();
+    console.log("link: " + (end - start) + "ms");
+    // console.dir(fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8"));
+  }
+
   private executeTests() {
     const start = Date.now();
     const RUN_RESULT = "_run_result.txt";
-    execSync(`npm link @abaplint/runtime`, {
-      stdio: 'pipe',
-      cwd: this.tmpDir });
 
     try {
       execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
