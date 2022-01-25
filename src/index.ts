@@ -1,4 +1,5 @@
 import * as Transpiler from "@abaplint/transpiler";
+import * as Cli from "@abaplint/transpiler-cli";
 import * as fs from "fs";
 import * as path from "path";
 import { execSync } from 'child_process'
@@ -13,17 +14,6 @@ interface IOutput {
   version: number,
   status: "pass" | "fail" | "error",
   message?: string,
-}
-
-export interface ITranspilerConfig {
-  input_folder: string;
-  /** list of regex, case insensitive, empty gives all files, positive list */
-  input_filter: string[];
-  output_folder: string;
-  lib: string;
-  write_unit_tests: boolean;
-  write_source_map: boolean;
-  options: Transpiler.ITranspilerOptions;
 }
 
 const output: IOutput = {
@@ -72,11 +62,10 @@ class Runner {
   }
 
   private initialize() {
-    const config: ITranspilerConfig = {
+    const config: Cli.ITranspilerConfig = {
       input_folder: ".",
       input_filter: [],
       output_folder: "compiled",
-      lib: "",
       write_source_map: true,
       write_unit_tests: true,
       options: {
