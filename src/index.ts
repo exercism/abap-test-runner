@@ -66,7 +66,7 @@ class Runner {
       input_folder: ".",
       input_filter: [],
       output_folder: "compiled",
-      write_source_map: true,
+      write_source_map: false,
       write_unit_tests: true,
       options: {
         ignoreSyntaxCheck: false,
