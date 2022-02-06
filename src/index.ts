@@ -10,15 +10,27 @@ const inputDir = process.argv[3];
 const outputDir = process.argv[4];
 const outputFile = process.argv[5];
 
+interface IOutputTest {
+  name: string,
+  status: "pass" | "fail" | "error",
+  message: string,
+  output?: string,
+  test_code?: string,
+}
+
 interface IOutput {
   version: number,
   status: "pass" | "fail" | "error",
   message?: string,
+  tests: IOutputTest[],
 }
 
+// **************************************
+
 const output: IOutput = {
-  version: 1,
+  version: 2,
   status: "pass",
+  tests: [],
 }
 
 class Runner {
@@ -38,7 +50,23 @@ class Runner {
       this.link();
       this.executeTests();
     }
+    if (output.status === "pass") {
+      this.readJsonResult();
+    }
     fs.writeFileSync(outputFile, JSON.stringify(output));
+  }
+
+  private readJsonResult() {
+    const list = JSON.parse(fs.readFileSync(path.join(this.tmpDir, "compiled", "output.json"), "utf-8"));
+    for (const t of list) {
+      if (t.status !== "SUCCESS") {
+        output.status = "fail";
+      }
+      output.tests.push({
+        name: t.method_name,
+        status: t.status === "SUCCESS" ? "pass" : "fail",
+        message: t.message});
+    }
   }
 
   private syntaxAndDownport() {
@@ -126,7 +154,7 @@ class Runner {
     const RUN_RESULT = "_run_result.txt";
 
     try {
-      execSync(`node compiled/index.mjs > ` + RUN_RESULT, {
+      execSync(`node compiled/index_open.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
         cwd: this.tmpDir});
     } catch (error) {
