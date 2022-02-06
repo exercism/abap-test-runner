@@ -1,1 +1,1 @@
-{"version":1,"status":"error","message":"./zcl_simple.clas.abap[9, 5] - Statement does not exist in ABAPopen-abap(or a parser error), \"blah\" (parser_error) [E]\nabaplint: 1 issue(s) found"}
+{"version":2,"status":"error","tests":[],"message":"./zcl_simple.clas.abap[9, 5] - Statement does not exist in ABAPopen-abap(or a parser error), \"blah\" (parser_error) [E]\nabaplint: 1 issue(s) found"}
