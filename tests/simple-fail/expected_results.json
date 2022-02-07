@@ -1,1 +1,1 @@
-{"version":2,"status":"fail","tests":[{"name":"TEST","status":"fail","message":"Expected 123456, got 3"}]}
+{"version":2,"status":"fail","tests":[{"name":"TEST","status":"fail","message":"Expected '123456', got '3'"}]}
