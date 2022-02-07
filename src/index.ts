@@ -158,7 +158,7 @@ class Runner {
         stdio: 'pipe',
         cwd: this.tmpDir});
     } catch (error) {
-      output.status = "fail";
+      output.status = "error";
       output.message = fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8");
       if (output.message.includes("Error: ASSERT failed")) {
         output.message = output.message.split("Error: ASSERT failed")[0] + "Error: ASSERT failed";
