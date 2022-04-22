@@ -114,7 +114,9 @@ class Runner {
 
     // DDIC, avoid copying transparent database table artifacts
     execSync(`cp -r open-abap/src/ddic/dtel/timestamp* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap/src/ddic/dtel/sy* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp -r open-abap/src/ddic/ttyp/string_table* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap/src/ddic/structures/scx* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
     execSync(`cp open-abap/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
