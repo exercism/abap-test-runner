@@ -111,6 +111,7 @@ class Runner {
     execSync(`cp open-abap/src/unit/*.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/cl_abap_math.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
     // DDIC, avoid copying transparent database table artifacts
     execSync(`cp -r open-abap/src/ddic/dtel/timestamp* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
