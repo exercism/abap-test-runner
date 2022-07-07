@@ -158,7 +158,7 @@ class Runner {
     const RUN_RESULT = "_run_result.txt";
 
     try {
-      execSync(`node compiled/index_open.mjs > ` + RUN_RESULT, {
+      execSync(`node compiled/_unit_open.mjs > ` + RUN_RESULT, {
         stdio: 'pipe',
         cwd: this.tmpDir});
     } catch (error) {
