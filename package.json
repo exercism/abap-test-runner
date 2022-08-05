@@ -26,10 +26,10 @@
     "require": "source-map-support/register"
   },
   "dependencies": {
-    "@abaplint/transpiler-cli": "^2.1.12",
-    "@abaplint/transpiler": "^2.1.12",
-    "@abaplint/cli": "^2.91.18",
-    "@abaplint/runtime": "^2.1.12"
+    "@abaplint/transpiler-cli": "^2.1.22",
+    "@abaplint/transpiler": "^2.1.22",
+    "@abaplint/cli": "^2.91.25",
+    "@abaplint/runtime": "^2.1.22"
   },
   "devDependencies": {
     "@types/chai": "^4.3.1",
@@ -38,6 +38,6 @@
     "mocha": "^10.0.0",
     "source-map-support": "^0.5.21",
     "typescript": "^4.7.4",
-    "@types/node": "^18.6.2"
+    "@types/node": "^18.6.4"
   }
 }
