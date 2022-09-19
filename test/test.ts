@@ -64,4 +64,8 @@ describe('abap-test-runner', async () => {
   it('use-ddic-string-table', async () => {
     test("use-ddic-string-table", "pass");
   });
+
+  it('unknown-variable', async () => {
+    test("unknown-variable", "error");
+  });
 });
