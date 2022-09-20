@@ -1,0 +1,13 @@
+CLASS zcl_simple DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    METHODS run RETURNING VALUE(res) TYPE i.
+ENDCLASS.
+
+CLASS zcl_simple IMPLEMENTATION.
+
+  METHOD run.
+    DATA foo TYPE i.
+    res = foo = 2.
+  ENDMETHOD.
+
+ENDCLASS.

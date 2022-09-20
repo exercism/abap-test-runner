@@ -68,4 +68,12 @@ describe('abap-test-runner', async () => {
   it('unknown-variable', async () => {
     test("unknown-variable", "error");
   });
+
+  it('escape-new-line', async () => {
+    test("escape-new-line", "fail");
+  });
+
+  it('no-chained-assignment', async () => {
+    test("no-chained-assignment", "error");
+  });
 });
