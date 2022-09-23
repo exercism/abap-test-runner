@@ -76,4 +76,8 @@ describe('abap-test-runner', async () => {
   it('no-chained-assignment', async () => {
     test("no-chained-assignment", "error");
   });
+
+  it('structure-fail', async () => {
+    test("structure-fail", "fail");
+  });
 });
