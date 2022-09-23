@@ -108,7 +108,7 @@ class Runner {
     fs.writeFileSync(path.join(this.tmpDir, "abap_transpile.json"), JSON.stringify(config, null, 2));
     execSync(`cp ${inputDir}/*.abap ${this.tmpDir}`, {stdio: 'pipe'});
     fs.mkdirSync(`${this.tmpDir}/deps`);
-    execSync(`cp open-abap/src/unit/*.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/unit/*.clas*.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/cl_message_helper.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
