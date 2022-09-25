@@ -73,8 +73,8 @@ describe('abap-test-runner', async () => {
     test("escape-new-line", "fail");
   });
 
-  it('no-chained-assignment', async () => {
-    test("no-chained-assignment", "error");
+  it('chained-assignment', async () => {
+    test("chained-assignment", "fail");
   });
 
   it('structure-fail', async () => {
