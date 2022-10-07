@@ -80,4 +80,12 @@ describe('abap-test-runner', async () => {
   it('structure-fail', async () => {
     test("structure-fail", "fail");
   });
+
+  it('break-point-error', async () => {
+    test("break-point-error", "error");
+  });
+
+  it('implement-method-error', async () => {
+    test("implement-method-error", "error");
+  });
 });
