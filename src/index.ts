@@ -72,7 +72,10 @@ class Runner {
   private syntaxAndDownport() {
     const LINT_RESULT = "_abaplint.txt";
     const abaplintConfig = Transpiler.config;
-    abaplintConfig.rules["avoid_use"] = {"break": true};
+    abaplintConfig.rules["avoid_use"] = {
+      "skipQuickFix": true,
+      "break": true
+    };
     abaplintConfig.rules["implement_methods"] = false; // this will be caught later by the transpiler
     abaplintConfig.rules["downport"] = true;           // https://rules.abaplint.org/downport/
     abaplintConfig.rules["definitions_top"] = true;    // https://rules.abaplint.org/definitions_top/
