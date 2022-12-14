@@ -88,4 +88,8 @@ describe('abap-test-runner', async () => {
   it('implement-method-error', async () => {
     test("implement-method-error", "error");
   });
+
+  it('console-log', async () => {
+    test("console-log", "pass");
+  });
 });
