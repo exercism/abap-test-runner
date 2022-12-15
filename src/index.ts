@@ -62,10 +62,18 @@ class Runner {
       if (t.status !== "SUCCESS") {
         output.status = "fail";
       }
-      output.tests.push({
-        name: t.method_name,
-        status: t.status === "SUCCESS" ? "pass" : "fail",
-        message: t.message});
+      if (t.console && t.console !== "") {
+        output.tests.push({
+          name: t.method_name,
+          status: t.status === "SUCCESS" ? "pass" : "fail",
+          output: t.console,
+          message: t.message});
+      } else {
+        output.tests.push({
+          name: t.method_name,
+          status: t.status === "SUCCESS" ? "pass" : "fail",
+          message: t.message});
+      }
     }
   }
 
@@ -113,6 +121,9 @@ class Runner {
     fs.writeFileSync(path.join(this.tmpDir, "abap_transpile.json"), JSON.stringify(config, null, 2));
     execSync(`cp ${inputDir}/*.abap ${this.tmpDir}`, {stdio: 'pipe'});
     fs.mkdirSync(`${this.tmpDir}/deps`);
+
+    execSync(`cp extra/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+
     execSync(`cp open-abap/src/unit/*.clas*.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
