@@ -92,4 +92,8 @@ describe('abap-test-runner', async () => {
   it('console-log', async () => {
     test("console-log", "pass");
   });
+
+  it('keyword-error', async () => {
+    test("keyword-error", "error");
+  });
 });
