@@ -186,6 +186,13 @@ class Runner {
         output.message = output.message.split("Error: ASSERT failed")[0] + "Error: ASSERT failed";
       }
       output.message = output.message.trim();
+      if (output.message === "") {
+        // @ts-ignore
+        output.message = error.toString();
+        if (output.message?.includes("SyntaxError:")) {
+          output.message = output.message.split("\n").filter(e => e.includes("SyntaxError:")).join("").trim();
+        }
+      }
     }
     const end = Date.now();
     console.log("executeTests: " + (end - start) + "ms");
