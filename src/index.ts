@@ -131,11 +131,13 @@ class Runner {
     execSync(`cp open-abap/src/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/cl_message_helper.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/math/cl_abap_math.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/kernel/kernel_internal_name.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
     // DDIC, avoid copying transparent database table artifacts
     execSync(`cp -r open-abap/src/ddic/dtel/timestamp* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp -r open-abap/src/ddic/dtel/sy* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp -r open-abap/src/ddic/dtel/int1* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap/src/ddic/dtel/sotr_conc* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp -r open-abap/src/ddic/ttyp/string_table* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp -r open-abap/src/ddic/structures/scx* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
