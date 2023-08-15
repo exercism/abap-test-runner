@@ -113,7 +113,7 @@ class Runner {
         ignoreSyntaxCheck: false,
         addFilenames: true,
         addCommonJS: true,
-        unknownTypes: "runtimeError",
+        unknownTypes: Transpiler.UnknownTypesEnum.runtimeError,
       }
     }
 
@@ -127,10 +127,10 @@ class Runner {
     execSync(`cp open-abap/src/unit/*.clas*.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/rtti/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/abap.type.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/abap/abap.type.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/abap/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/cl_message_helper.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/math/cl_abap_math.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap/src/abap/math/cl_abap_math.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp open-abap/src/kernel/kernel_internal_name.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
     // DDIC, avoid copying transparent database table artifacts
