@@ -1,1 +1,1 @@
-{"version":2,"status":"error","tests":[],"message":"Transpiler CLI\nUsing config: abap_transpile.json\n103 files added from source\n0 files skipped in source\n\nBuilding\nError: implement_methods, Implement method \"run\", zcl_simple.clas.abap:6"}
+{"version":2,"status":"error","tests":[],"message":"Transpiler CLI\nUsing config: abap_transpile.json\n105 files added from source\n0 files skipped in source\n\nBuilding\nError: implement_methods, Implement method \"run\", zcl_simple.clas.abap:6"}
