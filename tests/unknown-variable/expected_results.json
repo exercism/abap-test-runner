@@ -1,1 +1,1 @@
-{"version":2,"status":"error","tests":[],"message":"./zcl_simple.clas.abap[9, 5] - \"asdf\" not found, Target (check_syntax) [E]\nabaplint: 1 issue(s) found"}
+{"version":2,"status":"error","tests":[],"message":"./zcl_simple.clas.abap[9, 11] - \"asdf\" not found, Target (check_syntax) [E]\nabaplint: 1 issue(s) found"}
