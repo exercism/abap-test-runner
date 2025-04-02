@@ -26,10 +26,10 @@
     "require": "source-map-support/register"
   },
   "dependencies": {
-    "@abaplint/transpiler-cli": "^2.10.33",
-    "@abaplint/transpiler": "^2.10.33",
+    "@abaplint/transpiler-cli": "^2.10.34",
+    "@abaplint/transpiler": "^2.10.34",
     "@abaplint/cli": "^2.113.108",
-    "@abaplint/runtime": "^2.10.33"
+    "@abaplint/runtime": "^2.10.34"
   },
   "devDependencies": {
     "@types/chai": "^4.3.20",
