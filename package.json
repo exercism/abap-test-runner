@@ -16,7 +16,7 @@
     "abap-test-runner": "bin/run.sh"
   },
   "scripts": {
-    "build": "tsc --outDir ./dist && git clone --depth=1 https://github.com/open-abap/open-abap || true",
+    "build": "tsc --outDir ./dist && git clone --depth=1 https://github.com/open-abap/open-abap-core || true",
     "test": "npm run build && mocha"
   },
   "mocha": {
@@ -26,10 +26,10 @@
     "require": "source-map-support/register"
   },
   "dependencies": {
-    "@abaplint/transpiler-cli": "^2.10.34",
-    "@abaplint/transpiler": "^2.10.34",
-    "@abaplint/cli": "^2.113.108",
-    "@abaplint/runtime": "^2.10.34"
+    "@abaplint/transpiler-cli": "^2.10.44",
+    "@abaplint/transpiler": "^2.10.44",
+    "@abaplint/cli": "^2.113.110",
+    "@abaplint/runtime": "^2.10.44"
   },
   "devDependencies": {
     "@types/chai": "^4.3.20",
@@ -38,6 +38,6 @@
     "mocha": "^11.1.0",
     "source-map-support": "^0.5.21",
     "typescript": "^5.8.2",
-    "@types/node": "^22.13.17"
+    "@types/node": "^22.14.1"
   }
 }
