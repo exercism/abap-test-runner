@@ -124,24 +124,24 @@ class Runner {
 
     execSync(`cp extra/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
-    execSync(`cp open-abap/src/unit/*.clas*.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/rtti/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/abap/abap.type.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/abap/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/cl_message_helper.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/abap/math/cl_abap_math.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap/src/kernel/kernel_internal_name.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/unit/*.clas*.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/rtti/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/abap/abap.type.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/abap/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/cl_message_helper.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/abap/math/cl_abap_math.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/kernel/kernel_internal_name.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
     // DDIC, avoid copying transparent database table artifacts
-    execSync(`cp -r open-abap/src/ddic/dtel/timestamp* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap/src/ddic/dtel/sy* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap/src/ddic/dtel/int1* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap/src/ddic/dtel/sotr_conc* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap/src/ddic/ttyp/string_table* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap/src/ddic/structures/scx* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap-core/src/ddic/dtel/timestamp* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap-core/src/ddic/dtel/sy* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap-core/src/ddic/dtel/int1* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap-core/src/ddic/dtel/sotr_conc* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap-core/src/ddic/ttyp/string_table* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap-core/src/ddic/structures/scx* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
-    execSync(`cp open-abap/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp open-abap-core/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
     const end = Date.now();
     console.log("initialize: " + (end - start) + "ms");

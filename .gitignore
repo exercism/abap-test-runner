@@ -1,6 +1,7 @@
 dist
 node_modules
 open-abap/
+open-abap-core/
 output
 tests/*/_compile_result.txt
 tests/*/_run_result.txt
