@@ -20,6 +20,7 @@ docker run \
     --rm \
     --network none \
     --read-only \
+    --mount type=bind,source="${PWD}/bin/run-tests.sh",destination=/opt/test-runner/bin/run-tests.sh \
     --mount type=bind,src="${PWD}/tests",dst=/opt/test-runner/tests \
     --mount type=tmpfs,dst=/tmp \
     --workdir /opt/test-runner \
