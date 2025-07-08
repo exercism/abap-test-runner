@@ -1,1 +1,1 @@
-{"version":2,"status":"error","tests":[],"message":"./zcl_simple.clas.abap[9, 5] - Avoid use of BREAK/BREAK-POINT (avoid_use) [E]\nabaplint: 1 issue(s) found"}
+{"version":2,"status":"error","tests":[],"message":"zcl_simple.clas.abap[9, 5] - Avoid use of BREAK/BREAK-POINT (avoid_use) [E]\nabaplint: 1 issue(s) found"}
