@@ -1,22 +1,20 @@
-FROM node:lts-slim
+FROM node:lts-alpine
 
-RUN apt-get -y update
-RUN apt-get -y upgrade
-RUN apt-get -y install git
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
-
-
-RUN npm --version
-
-# The docker container is run without network access, so dont check for updates
+# Note: The docker container is run without network access
 ENV NO_UPDATE_NOTIFIER=true
 
 WORKDIR /opt/test-runner
 COPY . .
-RUN npm ci
-RUN npm run build
-RUN npm install @abaplint/cli -g
-RUN npm install @abaplint/transpiler-cli -g
-RUN npm install @abaplint/runtime -g
+RUN apk add --no-cache --virtual .build-deps git \
+ && npm ci \
+ && npm run build \
+ && apk del .build-deps \
+ # Remove build time depencies
+ && npm prune --omit dev \
+ # FIXME: These dependencies are required globally while they are included in package.json
+ && npm install --global @abaplint/cli @abaplint/transpiler-cli @abaplint/runtime \
+ # Clean npm generated files
+ && npm cache clean --force \
+ && rm -rf /tmp/* /root/.npm
+
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]

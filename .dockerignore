@@ -1,11 +1,11 @@
-.git/
-.appends/
-.github/
-.gitattributes
-.gitignore
-Dockerfile
-bin/run-in-docker.sh
-bin/run-tests-in-docker.sh
-tests/
-output/
-open-abap/
+# Ignore everything to act as an allow list
+*
+
+# Include application files
+!bin/run.sh
+!extra/
+!src/
+!test/
+!package-lock.json
+!package.json
+!tsconfig.json
