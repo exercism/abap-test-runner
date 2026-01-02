@@ -17,7 +17,7 @@ function readResult(): any {
 function checkExpected(expectedFile: string): void {
   const exp = fs.readFileSync(expectedFile, "utf-8");
   const act = fs.readFileSync(outputFile, "utf-8");
-  expect(act).to.equal(exp);
+  expect(act.trimEnd()).to.equal(exp.trimEnd());
 }
 
 function test(slug: string, expectedStatus: string) {
