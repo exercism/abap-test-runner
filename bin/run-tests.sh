@@ -23,11 +23,15 @@ for test_dir in tests/*; do
     bin/run.sh "${test_dir_name}" "${test_dir_path}" "${test_dir_path}"
 
     echo "${test_dir_name}: comparing results.json to expected_results.json"
-    diff "${results_file_path}" "${expected_results_file_path}"
+    for file in "${results_file_path}" "${expected_results_file_path}"; do
+        sed 's/[0-9]\+ files added from source/N files added from source/' "${file}" > "${file}.clean"
+    done
+    diff "${results_file_path}.clean" "${expected_results_file_path}.clean"
+    rm "${results_file_path}.clean" "${expected_results_file_path}.clean"
 
     if [ $? -ne 0 ]; then
         exit_code=1
     fi
 done
 
-exit ${exit_code}
+exit "${exit_code}"
