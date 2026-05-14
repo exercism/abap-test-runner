@@ -140,6 +140,7 @@ class Runner {
     execSync(`cp -r open-abap-core/src/ddic/dtel/sotr_conc* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp -r open-abap-core/src/ddic/ttyp/string_table* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`cp -r open-abap-core/src/ddic/structures/scx* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
+    execSync(`cp -r open-abap-core/src/ddic/structures/x031l* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
 
     execSync(`cp open-abap-core/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
     execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
