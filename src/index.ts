@@ -167,15 +167,24 @@ class Runner {
     console.log("transpile: " + (end - start) + "ms");
   }
 
+  // Makes @abaplint/runtime importable from the compiled tests by symlinking
+  // node_modules/@abaplint/runtime to the globally installed package, which is
+  // what `npm link @abaplint/runtime` did. Creating the symlink directly is
+  // faster: npm took about 5.7s per run, because after linking, its update
+  // check waited about 5s for a DNS lookup that can't succeed without a
+  // network, and starting npm itself took about 0.6s. If there is no global
+  // install (as when running the tests outside Docker), the runner's own copy
+  // of the package is used instead.
   private link() {
-    const RUN_RESULT = "_link_result.txt";
     const start = Date.now();
-    execSync(`npm link @abaplint/runtime > ` + RUN_RESULT, {
-      stdio: 'pipe',
-      cwd: this.tmpDir });
+    const globalRuntime = path.join(path.dirname(process.execPath), "..", "lib", "node_modules", "@abaplint", "runtime");
+    const runtime = fs.existsSync(globalRuntime)
+      ? globalRuntime
+      : path.dirname(require.resolve("@abaplint/runtime/package.json"));
+    fs.mkdirSync(path.join(this.tmpDir, "node_modules", "@abaplint"), {recursive: true});
+    fs.symlinkSync(runtime, path.join(this.tmpDir, "node_modules", "@abaplint", "runtime"));
     const end = Date.now();
     console.log("link: " + (end - start) + "ms");
-    // console.dir(fs.readFileSync(path.join(this.tmpDir, RUN_RESULT), "utf-8"));
   }
 
   private executeTests() {
