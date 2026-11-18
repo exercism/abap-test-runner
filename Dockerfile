@@ -13,6 +13,8 @@ RUN apk add --no-cache --virtual .build-deps git \
  && npm prune --omit dev \
  # FIXME: These dependencies are required globally while they are included in package.json
  && npm install --global @abaplint/cli @abaplint/transpiler-cli @abaplint/runtime \
+ # Prepare the dependencies with the abaplint installed above (see src/prepare_deps.ts)
+ && node dist/src/prepare_deps.js \
  # Clean npm generated files
  && npm cache clean --force \
  && rm -rf /tmp/* /root/.npm
