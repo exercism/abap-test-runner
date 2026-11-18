@@ -1,5 +1,5 @@
-import * as Transpiler from "@abaplint/transpiler";
-import * as Cli from "@abaplint/transpiler-cli";
+import type { UnknownTypesEnum } from "@abaplint/transpiler";
+import type * as Cli from "@abaplint/transpiler-cli";
 import * as fs from "fs";
 import * as path from "path";
 import { execSync } from 'child_process'
@@ -79,15 +79,8 @@ class Runner {
 
   private syntaxAndDownport() {
     const LINT_RESULT = "_abaplint.txt";
-    const abaplintConfig = Transpiler.config;
-    abaplintConfig.rules["avoid_use"] = {
-      "skipQuickFix": true,
-      "break": true
-    };
-    abaplintConfig.rules["implement_methods"] = false; // this will be caught later by the transpiler
-    abaplintConfig.rules["downport"] = true;           // https://rules.abaplint.org/downport/
-    abaplintConfig.rules["definitions_top"] = true;    // https://rules.abaplint.org/definitions_top/
-    fs.writeFileSync(path.join(this.tmpDir, "abaplint.json"), JSON.stringify(abaplintConfig, null, 2));
+    // The build writes this file with src/abaplint_config.ts.
+    fs.copyFileSync(path.join(__dirname, "..", "abaplint.json"), path.join(this.tmpDir, "abaplint.json"));
     const start = Date.now();
     try {
       execSync(`abaplint --fix > ` + LINT_RESULT, {
@@ -113,7 +106,7 @@ class Runner {
         ignoreSyntaxCheck: false,
         addFilenames: true,
         addCommonJS: true,
-        unknownTypes: Transpiler.UnknownTypesEnum.runtimeError,
+        unknownTypes: "runtimeError" as UnknownTypesEnum,
       }
     }
 
