@@ -4,6 +4,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { execSync } from 'child_process'
 import { tmpdir } from "os";
+import { copyDeps } from "./deps";
 
 const slug = process.argv[2];
 const inputDir = process.argv[3];
@@ -113,32 +114,15 @@ class Runner {
     const start = Date.now();
     fs.writeFileSync(path.join(this.tmpDir, "abap_transpile.json"), JSON.stringify(config, null, 2));
     execSync(`cp ${inputDir}/*.abap ${this.tmpDir}`, {stdio: 'pipe'});
-    fs.mkdirSync(`${this.tmpDir}/deps`);
-
-    execSync(`cp extra/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-
-    execSync(`cp open-abap-core/src/unit/*.clas*.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap-core/src/exceptions/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap-core/src/rtti/* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap-core/src/abap/abap.type.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap-core/src/abap/cl_abap_char_utilities.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap-core/src/cl_message_helper.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap-core/src/abap/math/cl_abap_math.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp open-abap-core/src/kernel/kernel_internal_name.clas.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-
-    // DDIC, avoid copying transparent database table artifacts
-    execSync(`cp -r open-abap-core/src/ddic/dtel/timestamp* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/dtel/sy* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/dtel/int1* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/dtel/sotr_conc* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/doma/char30* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/_deprecated/dtel/char30* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/ttyp/string_table* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/structures/scx* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`cp -r open-abap-core/src/ddic/structures/x031l* ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-
-    execSync(`cp open-abap-core/src/classrun/*.intf.abap ${this.tmpDir}/deps/`, {stdio: 'pipe'});
-    execSync(`rm ${this.tmpDir}/deps/*.testclasses.*`, {stdio: 'pipe'});
+    // The image build prepares deps/ with src/prepare_deps.ts. Without it (as
+    // when running the tests outside Docker), the original files are copied.
+    const preparedDeps = path.join(__dirname, "..", "..", "deps");
+    if (fs.existsSync(preparedDeps)) {
+      fs.cpSync(preparedDeps, `${this.tmpDir}/deps`, {recursive: true});
+    } else {
+      fs.mkdirSync(`${this.tmpDir}/deps`);
+      copyDeps(`${this.tmpDir}/deps`);
+    }
     const end = Date.now();
     console.log("initialize: " + (end - start) + "ms");
   }
